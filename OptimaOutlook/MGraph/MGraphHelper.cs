@@ -30,15 +30,24 @@ namespace OptimaOutlook.MGraph
         //dla srs
         public static async Task UpdateEvent(string ID, Srs serwis, GraphServiceClient x, string srsTopicTemplate, string srsDescTemplate)
         {
-            await x.Me.Calendar.Events[ID].Request().UpdateAsync(new Event()
+            try
             {
-                Subject = Parser.ParseSrs(srsTopicTemplate, serwis),
-                Body = new ItemBody() { ContentType = BodyType.Html, Content = Parser.ParseSrs(srsDescTemplate, serwis) },
-                Start = new DateTimeTimeZone() { DateTime = Convert.ToDateTime(serwis.SrZ_DataPrzyjecia).ToString("yyyy-MM-ddTHH:mm:ss.fffffff"), TimeZone = "Europe/Warsaw" },
-                End = new DateTimeTimeZone() { DateTime = Convert.ToDateTime(serwis.SrZ_DataPrzyjecia).ToString("yyyy-MM-ddTHH:mm:ss.fffffff"), TimeZone = "Europe/Warsaw" },
-                Location = new Location() { DisplayName = serwis.SrZ_PodMiasto }
+                await x.Me.Calendar.Events[ID].Request().UpdateAsync(new Event()
+                {
+                    Subject = Parser.ParseSrs(srsTopicTemplate, serwis),
+                    Body = new ItemBody() { ContentType = BodyType.Html, Content = Parser.ParseSrs(srsDescTemplate, serwis) },
+                    Start = new DateTimeTimeZone() { DateTime = Convert.ToDateTime(serwis.SrZ_DataRealizacji).ToString("yyyy-MM-ddTHH:mm:ss.fffffff"), TimeZone = "Europe/Warsaw" },
+                    End = new DateTimeTimeZone() { DateTime = Convert.ToDateTime(serwis.SrZ_DataRealizacji).AddDays(1).ToString("yyyy-MM-ddTHH:mm:ss.fffffff"), TimeZone = "Europe/Warsaw" },
+                    Location = new Location() { DisplayName = serwis.SrZ_PodMiasto }
 
-            });
+                });
+            }
+            catch (Exception xc)
+            {
+
+                Console.WriteLine(xc.Message);
+            }
+          
 
         }
 
@@ -57,9 +66,10 @@ namespace OptimaOutlook.MGraph
             newEvent.Subject = Parser.ParseSrs(srsTopicTemplate, serwis);
             newEvent.Body = new ItemBody() { ContentType = BodyType.Html, Content = Parser.ParseSrs(srsDescTemplate, serwis) };
             newEvent.Location = loc;
+            newEvent.IsAllDay = true;
             //Console.WriteLine("MGRAPH: ID " + serwis.SrZ_SrZId + " / " + serwis.SrZ_DataPrzyjecia + " / " + serwis.SrZ_DataPrzyjecia);
-            newEvent.Start = new DateTimeTimeZone() { DateTime = Convert.ToDateTime(serwis.SrZ_DataPrzyjecia).ToString("yyyy-MM-ddTHH:mm:ss.fffffff"), TimeZone = "Europe/Warsaw" };
-            newEvent.End = new DateTimeTimeZone() { DateTime = Convert.ToDateTime(serwis.SrZ_DataPrzyjecia).ToString("yyyy-MM-ddTHH:mm:ss.fffffff"), TimeZone = "Europe/Warsaw" };
+            newEvent.Start = new DateTimeTimeZone() { DateTime = Convert.ToDateTime(serwis.SrZ_DataRealizacji).ToString("yyyy-MM-ddTHH:mm:ss.fffffff"), TimeZone = "Europe/Warsaw" };
+            newEvent.End = new DateTimeTimeZone() { DateTime = Convert.ToDateTime(serwis.SrZ_DataRealizacji).AddDays(1).ToString("yyyy-MM-ddTHH:mm:ss.fffffff"), TimeZone = "Europe/Warsaw" };
 
             Event xx = await x.Me.Calendars[srsCalendarId].Events.Request().AddAsync(newEvent);
 

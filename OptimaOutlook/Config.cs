@@ -31,6 +31,14 @@ namespace OptimaOutlook
 
         static public readonly string SrsCalendarId;
 
+        static public readonly string SrSSMTPClientHost;
+
+        static public readonly int SrSSMTPClientPort;
+
+        static public readonly string SrSMailUsername;
+
+        static public readonly string SrSMailPassword;
+
         static public readonly IEnumerable<string> Scopes = new string[]{"User.Read",
                                                                         "Calendars.Read",
                                                                         "Calendars.Read.Shared",
@@ -64,7 +72,15 @@ namespace OptimaOutlook
 
             ClientId = tmp.ClientId;
 
-            //Console.WriteLine(Database + " " + DataSource + " " + userId);
+            SrSSMTPClientHost = tmp.SrSSMTPClientHost;
+
+            SrSSMTPClientPort = tmp.SrSSMTPClientPort;
+             
+            SrSMailUsername = tmp.SrSMailUsername;
+
+            SrSMailPassword = tmp.SrSMailPassword;
+
+            Console.WriteLine(Database + " " + DataSource + " " + userId);
         }
     }
 }

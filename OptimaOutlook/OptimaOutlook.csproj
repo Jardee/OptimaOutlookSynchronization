@@ -81,6 +81,7 @@
   <ItemGroup>
     <Compile Include="Config.cs" />
     <Compile Include="LinksDatabase.cs" />
+    <Compile Include="MainClass.cs" />
     <Compile Include="MGraph\MGraphHelper.cs" />
     <Compile Include="MGraph\MsalAuthenticationProvider.cs" />
     <Compile Include="Models\Knt.cs" />

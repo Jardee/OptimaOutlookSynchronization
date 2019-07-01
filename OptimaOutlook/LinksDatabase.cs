@@ -12,7 +12,6 @@ namespace OptimaOutlook
         static LinksDatabase()
         {
             string homePath = Environment.ExpandEnvironmentVariables("%HOMEDRIVE%%HOMEPATH%");
-            Console.WriteLine(homePath);
             connectionString = @"Data Source=" + homePath + "\\Baza.db; Version=3; FailIfMissing=True; Foreign Keys=True;";
         }
         //pobierz srs
@@ -174,6 +173,14 @@ namespace OptimaOutlook
 
             tmp.ClientId = "";
 
+            tmp.SrSSMTPClientHost = "";
+
+            tmp.SrSSMTPClientPort = 587;
+
+            tmp.SrSMailUsername = "";
+
+            tmp.SrSMailPassword = "";
+
             try
             {
                 using (SQLiteConnection conn = new SQLiteConnection(connectionString))
@@ -206,6 +213,14 @@ namespace OptimaOutlook
                                 tmp.SrsCalendarId = reader["SrsCalendarId"].ToString();
 
                                 tmp.ClientId = reader["ClientId"].ToString();
+
+                                tmp.SrSSMTPClientHost = reader["SrSSMTPClientHost"].ToString();
+
+                                tmp.SrSSMTPClientPort = Int32.TryParse(reader["SrSSMTPClientPort"].ToString(), out int result)? result : 587 ;
+
+                                tmp.SrSMailUsername = reader["SrSMailUsername"].ToString();
+
+                                tmp.SrSMailPassword = reader["SrSMailPassword"].ToString();
                             }
                             
 
@@ -279,6 +294,16 @@ namespace OptimaOutlook
             public string SrsCalendarId;
 
             public string ClientId;
+
+            public string SrSSMTPClientHost;
+
+            public int SrSSMTPClientPort;
+
+            public string SrSMailUsername;
+
+            public string SrSMailPassword;
+
+            //Jeszcze lista z mailami ale to się zrobi w configu po przecinku czy coś
         }
     }
 }

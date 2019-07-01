@@ -54,7 +54,7 @@ namespace OptimaOutlook.Optima
 
                 DBConnection.Open();
                 SqlCommand komendaSQL = DBConnection.CreateCommand();
-                komendaSQL.CommandText = "SELECT * FROM CDN.SrsZlecenia";
+                komendaSQL.CommandText = "SELECT * FROM CDN.SrsZlecenia WHERE SrZ_Bufor = 1;";
                 SqlDataReader czytnik = komendaSQL.ExecuteReader();
 
                 while (czytnik.Read())

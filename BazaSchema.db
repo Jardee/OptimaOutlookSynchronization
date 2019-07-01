@@ -1,0 +1,32 @@
+BEGIN TRANSACTION;
+CREATE TABLE IF NOT EXISTS "SrSMailOdbiorcy" (
+	"ID"	INTEGER PRIMARY KEY AUTOINCREMENT,
+	"Mail"	TEXT
+);
+CREATE TABLE IF NOT EXISTS "PowiazaniaKnt" (
+	"ID"	INTEGER PRIMARY KEY AUTOINCREMENT
+);
+CREATE TABLE IF NOT EXISTS "Config" (
+	"DataSource"	TEXT,
+	"Database"	TEXT,
+	"UserId"	TEXT,
+	"Password"	TEXT,
+	"SrsTopicTemplate"	TEXT,
+	"SrsDescTemplate"	TEXT,
+	"SrsCalendarId"	TEXT,
+	"KntTopicTemplate"	TEXT,
+	"KntDescTemplate"	TEXT,
+	"ID"	INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE,
+	"ClientId"	TEXT,
+	"SrSSMTPClientHost"	TEXT,
+	"SrSSMTPClientPort"	TEXT,
+	"SrSMailUsername"	TEXT,
+	"SrSMailPassword"	TEXT
+);
+CREATE TABLE IF NOT EXISTS "PowiazaniaSrs" (
+	"ID"	INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE,
+	"IDSerwisu"	INTEGER,
+	"EventID"	TEXT,
+	"DataModyfikacjiSerwisu"	TEXT
+);
+COMMIT;
